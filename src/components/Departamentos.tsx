@@ -30,8 +30,8 @@ export default function Departamentos() {
       icon: <Users className="w-12 h-12 mx-auto mb-4" />,
       titulo: "Jovens",
       descricaoCurta: "Uma geração comprometida com Cristo e com o chamado.",
-      descricaoLonga: "Os Jovens Manancial é o departamento dos jovem, reúne adolescentes e jovens adultos para fortalecer sua fé através de estudos bíblicos profundos, encontros sociais e atividades missionárias.",
-      fotos: ["/imagens/jovens.jpeg"],
+      descricaoLonga: "Os Jovens Mananciais é o departamento dos jovem, reúne adolescentes e jovens adultos para fortalecer sua fé através de estudos bíblicos profundos, encontros sociais e atividades missionárias.",
+      fotos: ["/imagens/jovens.jpg"],
       cor: "text-green-600",
     },
     {
@@ -129,7 +129,7 @@ export default function Departamentos() {
                 {/* Galeria de fotos - Layout para 1 foto */}
                 <div>
                   <h4 className="text-xl font-semibold text-gray-800 mb-6">
-                    Departamento
+                    Nosso Departamento
                   </h4>
                   
                   <div
@@ -149,30 +149,37 @@ export default function Departamentos() {
                     }}
                   >
                     <div className="relative rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
-                      <div className="w-full h-64 md:h-72 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
-                        {/* IMAGEM COM AJUSTE ESPECÍFICO PARA JOVENS */}
+                      <div className="w-full h-64 md:h-72 bg-slate-100">
+                        {/* AJUSTE ESPECÍFICO PARA A FOTO DOS JOVENS */}
                         <img
                           src={dept.fotos[0]}
                           alt={`Departamento ${dept.titulo}`}
                           className={`
                             w-full h-full hover:scale-105 transition-transform duration-500
                             ${dept.titulo === "Jovens" 
-                              ? 'object-contain max-h-full max-w-full' 
-                              : 'object-cover'
+                              ? 'object-contain' // Para Jovens: mostra imagem inteira sem cortar
+                              : 'object-cover'   // Para outros: preenche o container
                             }
                           `}
+                          style={{ 
+                            backgroundColor: '#f8fafc',
+                            // Ajuste adicional para a foto dos Jovens se necessário
+                            ...(dept.titulo === "Jovens" && { objectPosition: 'center top' })
+                          }}
                           onError={(e) => {
                             e.currentTarget.style.display = 'none';
                             const parent = e.currentTarget.parentElement;
                             if (parent) {
                               const fallbackText = document.createElement('div');
-                              fallbackText.className = 'text-slate-400 text-center p-4';
+                              fallbackText.className = 'flex items-center justify-center w-full h-full text-slate-400 text-center p-4';
                               fallbackText.innerHTML = `
-                                <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                </svg>
-                                <p class="text-lg font-medium">Departamento ${dept.titulo}</p>
-                                <p class="text-sm mt-1">Em breve mais fotos</p>
+                                <div>
+                                  <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                  </svg>
+                                  <p class="text-lg font-medium">Departamento ${dept.titulo}</p>
+                                  <p class="text-sm mt-1">Em breve mais fotos</p>
+                                </div>
                               `;
                               parent.appendChild(fallbackText);
                             }
@@ -186,66 +193,17 @@ export default function Departamentos() {
                       </div>
                     </div>
                     <p className="text-center text-slate-600 mt-4 text-sm">
-                      Conheça o departamento do(a) {dept.titulo} na nossa igreja
+                      Conheça o trabalho do departamento {dept.titulo} na nossa igreja
                     </p>
                   </div>
                 </div>
 
                 {/* Informações adicionais */}
-                <div className="mt-8 md:mt-10 pt-6 border-t border-slate-200">
-                  <div className="flex flex-col sm:flex-row flex-wrap gap-4 text-sm text-slate-600">
-                    <div className="flex items-center space-x-2">
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className={`w-3 h-3 rounded-full ${dept.id === 1 ? 'bg-blue-500' : dept.id === 2 ? 'bg-green-500' : 'bg-pink-500'}`}></div>
-                      <span>Atividades especiais</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className={`w-3 h-3 rounded-full ${dept.id === 1 ? 'bg-blue-500' : dept.id === 2 ? 'bg-green-500' : 'bg-pink-500'}`}></div>
-                      <span>Equipe dedicada</span>
-                    </div>
-                    {dept.titulo === "Crianças" && (
-                      <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                        <span>Cordeirinhos de Cristo</span>
-                      </div>
-                    )}
-                    {dept.titulo === "Jovens" && (
-                      <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                        <span>Jovens Mananciais</span>
-                      </div>
-                    )}
-                    {dept.titulo === "Irmãs" && (
-                      <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 rounded-full bg-pink-500"></div>
-                        <span>Herdeiras do Rei</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         ))}
       </div>
-
-      <style jsx global>{`
-        @keyframes fadeInScale {
-          from {
-            opacity: 0;
-            transform: scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-        
-        .transition-all {
-          transition-property: all;
-        }
-      `}</style>
     </section>
   );
 }
