@@ -30,7 +30,7 @@ export default function Departamentos() {
       icon: <Users className="w-12 h-12 mx-auto mb-4" />,
       titulo: "Jovens",
       descricaoCurta: "Uma geração comprometida com Cristo e com o chamado.",
-      descricaoLonga: "Os Jovens Mananciais é o departamento dos jovem, reúne adolescentes e jovens adultos para fortalecer sua fé através de estudos bíblicos profundos, encontros sociais e atividades missionárias.",
+      descricaoLonga: "Os Jovens Manancial é o departamento dos jovem, reúne adolescentes e jovens adultos para fortalecer sua fé através de estudos bíblicos profundos, encontros sociais e atividades missionárias.",
       fotos: ["/imagens/jovens.jpg"],
       cor: "text-green-600",
     },
