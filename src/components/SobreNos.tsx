@@ -1,4 +1,4 @@
-import { Calendar, MapPin, Users, Church, BookOpen, Heart, Clock, Star, ArrowRight, ChevronLeft, ChevronUp } from 'lucide-react';
+import { Calendar, MapPin, Users, Church, Clock, Star, ChevronLeft, ChevronUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 

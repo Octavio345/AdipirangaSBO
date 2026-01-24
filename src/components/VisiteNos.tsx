@@ -1,4 +1,4 @@
-import { MapPin, Clock, Phone, Mail, Accessibility, Users, Calendar, Music, Instagram, Facebook, Home } from 'lucide-react';
+import { MapPin, Clock, Accessibility, Users, Calendar, Music, Instagram, Facebook, Home } from 'lucide-react';
 
 export default function VisiteNos() {
   // Endereço da igreja local
@@ -72,7 +72,8 @@ export default function VisiteNos() {
 
   // URLs do Google Maps
   const googleMapsLocal = `https://www.google.com/maps?q=${encodeURIComponent('Rua Terezina, 137, Cidade Nova, Santa Bárbara D\'Oeste, SP')}&output=embed`;
-  const googleMapsMatriz = `https://www.google.com/maps?q=${encodeURIComponent('Av. Dr. Ricardo Jafet, 214, Ipiranga, São Paulo, SP')}&output=embed`;
+  // Corrigido: Variável usada agora (sem erro TypeScript)
+  const googleMapsMatriz = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Av. Dr. Ricardo Jafet, 214, Ipiranga, São Paulo, SP')}`;
 
   return (
     <section id="visite" className="py-16 bg-gradient-to-b from-blue-50 to-white">
@@ -177,8 +178,9 @@ export default function VisiteNos() {
                   </div>
                 </div>
                 
+                {/* AGORA USANDO A VARIÁVEL googleMapsMatriz - SEM ERRO! */}
                 <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sedeMatriz.rua + ', ' + sedeMatriz.bairro + ', ' + sedeMatriz.cidade)}`}
+                  href={googleMapsMatriz}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-white text-blue-900 font-semibold rounded-lg hover:bg-blue-100 transition-all duration-300"
