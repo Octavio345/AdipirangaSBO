@@ -26,7 +26,7 @@ interface Foto {
 }
 
 export default function GaleriaFotos() {
-  const [fotos, setFotos] = useState<Foto[]>([
+  const [fotos] = useState<Foto[]>([
     {
       id: 1,
       url: "/imagens/UNIMADI.png",
@@ -93,7 +93,7 @@ export default function GaleriaFotos() {
   const [busca, setBusca] = useState('');
   const [fotoSelecionada, setFotoSelecionada] = useState<Foto | null>(null);
   const [modalAberto, setModalAberto] = useState(false);
-  const [carregando, setCarregando] = useState(false);
+  const [carregando] = useState(false);
   const [mostrarInstrucoes, setMostrarInstrucoes] = useState(true);
 
   // Categorias disponíveis
