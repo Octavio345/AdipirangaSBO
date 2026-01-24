@@ -76,7 +76,7 @@ export default function Header() {
     { label: "Departamentos", href: "departamentos", type: "anchor" },
     { label: "Liderança", href: "lideranca", type: "anchor" },
     { label: "SEMADI", href: "semadi", type: "anchor" },
-    { label: "Galeria", href: "/galeria", type: "page" }, // ADICIONADO AQUI
+    { label: "Galeria", href: "/galeria", type: "page" },
   ];
 
   return (
@@ -188,22 +188,24 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
-        <div className={`md:hidden overflow-hidden transition-all duration-500 ${
-          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        {/* Mobile Menu - ALTURA DINÂMICA */}
+        <div className={`md:hidden transition-all duration-500 ease-in-out ${
+          isMenuOpen 
+            ? 'max-h-[500px] opacity-100'  // Altura aumentada
+            : 'max-h-0 opacity-0'
         }`}>
           <div className="bg-gradient-to-b from-blue-800/95 to-blue-900/95 backdrop-blur-sm border-t border-white/10 shadow-xl rounded-b-lg">
-            <div className="px-2 pt-2 pb-4 space-y-1">
+            <div className="px-3 pt-3 pb-4 space-y-1.5"> {/* Aumentei padding */}
               {menuItems.map((link) => (
                 link.type === 'page' ? (
                   <Link
                     key={link.label}
                     to={link.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 transition-all duration-300 border-l-2 border-transparent hover:border-yellow-400 hover:pl-6 flex items-center justify-between group"
+                    className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-white/10 transition-all duration-300 border-l-2 border-transparent hover:border-yellow-400 hover:pl-5 flex items-center justify-between group text-sm" // Texto menor
                   >
-                    <span>{link.label}</span>
-                    <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+                    <span className="truncate">{link.label}</span> {/* Truncate para textos longos */}
+                    <ChevronRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300 flex-shrink-0" />
                   </Link>
                 ) : (
                   <button
@@ -212,22 +214,23 @@ export default function Header() {
                       setIsMenuOpen(false);
                       scrollToSection(link.href);
                     }}
-                    className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 transition-all duration-300 border-l-2 border-transparent hover:border-yellow-400 hover:pl-6 flex items-center justify-between group"
+                    className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-white/10 transition-all duration-300 border-l-2 border-transparent hover:border-yellow-400 hover:pl-5 flex items-center justify-between group text-sm" // Texto menor
                   >
-                    <span>{link.label}</span>
-                    <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+                    <span className="truncate">{link.label}</span> {/* Truncate para textos longos */}
+                    <ChevronRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300 flex-shrink-0" />
                   </button>
                 )
               ))}
+              {/* Botão Visite-nos com margem extra */}
               <button
                 onClick={() => {
                   setIsMenuOpen(false);
                   scrollToSection('visite');
                 }}
-                className="w-full px-4 py-3 mt-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-blue-900 font-semibold rounded-lg text-center font-bold flex items-center justify-center gap-2 group"
+                className="w-full px-4 py-3 mt-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-blue-900 font-semibold rounded-lg text-center text-sm flex items-center justify-center gap-2 group shadow-md"
               >
                 Visite-nos
-                <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
+                <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
               </button>
             </div>
           </div>
