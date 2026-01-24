@@ -1,12 +1,11 @@
 // src/components/GaleriaFotos.tsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { 
   X, 
   ChevronLeft, 
   ChevronRight, 
   Calendar, 
   MapPin, 
-  Users,
   Church,
   Music,
   Heart,
@@ -22,7 +21,6 @@ interface Foto {
   data: string;
   local: string;
   categoria: 'culto' | 'evento' | 'congresso' | 'social' | 'missao';
-  participantes: number;
 }
 
 export default function GaleriaFotos() {
@@ -35,7 +33,6 @@ export default function GaleriaFotos() {
       data: "2025-11-10",
       local: "Congregação de Sumaré",
       categoria: 'congresso',
-      participantes: 250
     },
     {
       id: 2,
@@ -45,7 +42,7 @@ export default function GaleriaFotos() {
       data: "2025-10-05",
       local: "Templo Principal",
       categoria: 'culto',
-      participantes: 80
+
     },
     {
       id: 3,
@@ -55,7 +52,7 @@ export default function GaleriaFotos() {
       data: "2024-01-20",
       local: "Congregação de Sumaré",
       categoria: 'congresso',
-      participantes: 200
+
     },
     {
       id: 4,
@@ -65,7 +62,7 @@ export default function GaleriaFotos() {
       data: "2025-08-25",
       local: "Templo Principal",
       categoria: 'evento',
-      participantes: 50
+
     },
     {
       id: 5,
@@ -75,7 +72,7 @@ export default function GaleriaFotos() {
       data: "2025-08-17",
       local: "Praça",
       categoria: 'missao',
-      participantes: 50
+
     },
     {
       id: 6,
@@ -85,7 +82,7 @@ export default function GaleriaFotos() {
       data: "2025-06-30",
       local: "Casa dos irmãos",
       categoria: 'culto',
-      participantes: 40
+
     }
   ]);
 
@@ -95,13 +92,27 @@ export default function GaleriaFotos() {
   const [modalAberto, setModalAberto] = useState(false);
   const [carregando] = useState(false);
   const [mostrarInstrucoes, setMostrarInstrucoes] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Detectar se é mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Categorias disponíveis
   const categorias = [
     { id: 'todos', nome: 'Todos os Eventos', icone: <Church className="w-4 h-4" />, cor: 'bg-gray-100 text-gray-800' },
     { id: 'culto', nome: 'Cultos', icone: <Church className="w-4 h-4" />, cor: 'bg-blue-100 text-blue-800' },
     { id: 'evento', nome: 'Eventos', icone: <Calendar className="w-4 h-4" />, cor: 'bg-green-100 text-green-800' },
-    { id: 'congresso', nome: 'Congressos', icone: <Users className="w-4 h-4" />, cor: 'bg-purple-100 text-purple-800' },
+    { id: 'congresso', nome: 'Congressos',  cor: 'bg-purple-100 text-purple-800' },
     { id: 'missao', nome: 'Missões', icone: <Heart className="w-4 h-4" />, cor: 'bg-red-100 text-red-800' },
     { id: 'social', nome: 'Sociais', icone: <Music className="w-4 h-4" />, cor: 'bg-yellow-100 text-yellow-800' },
   ];
@@ -122,6 +133,23 @@ export default function GaleriaFotos() {
       setMostrarInstrucoes(true);
     }
   }, [modalAberto]);
+
+  // Fechar modal ao clicar fora (apenas desktop)
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node) && !isMobile) {
+        fecharModal();
+      }
+    };
+
+    if (modalAberto) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [modalAberto, isMobile]);
 
   // Filtrar fotos
   const fotosFiltradas = fotos.filter(foto => {
@@ -165,7 +193,7 @@ export default function GaleriaFotos() {
   const abrirModal = (foto: Foto) => {
     setFotoSelecionada(foto);
     setModalAberto(true);
-    document.body.style.overflow = 'hidden'; // Bloquear scroll
+    document.body.style.overflow = 'hidden';
   };
 
   // Fechar modal
@@ -173,7 +201,7 @@ export default function GaleriaFotos() {
     setModalAberto(false);
     setFotoSelecionada(null);
     setMostrarInstrucoes(true);
-    document.body.style.overflow = 'auto'; // Restaurar scroll
+    document.body.style.overflow = 'auto';
   };
 
   // Teclas para navegação no modal
@@ -268,6 +296,14 @@ export default function GaleriaFotos() {
                 key={foto.id}
                 className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
                 onClick={() => abrirModal(foto)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    abrirModal(foto);
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-label={`Ver detalhes de ${foto.titulo}`}
               >
                 {/* Container da Imagem */}
                 <div className="relative h-56 overflow-hidden">
@@ -308,8 +344,6 @@ export default function GaleriaFotos() {
                       <span className="truncate">{foto.local}</span>
                     </div>
                     <div className="flex items-center text-slate-500 text-sm">
-                      <Users className="w-4 h-4 mr-2 flex-shrink-0" />
-                      <span>{foto.participantes.toLocaleString()} participantes</span>
                     </div>
                   </div>
                 </div>
@@ -318,15 +352,21 @@ export default function GaleriaFotos() {
           </div>
         )}
 
-        {/* Modal para visualização ampliada - COMPLETO E CORRIGIDO */}
+        {/* Modal para visualização ampliada */}
         {modalAberto && fotoSelecionada && (
-          <div className="fixed inset-0 z-50 bg-black/95 animate-fadeIn">
+          <div 
+            className="fixed inset-0 z-50 bg-black/95 animate-fadeIn"
+            onClick={fecharModal}
+          >
             
-            {/* Cabeçalho Mobile - Fixo no topo */}
+            {/* Cabeçalho Mobile */}
             <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-black/80 to-transparent p-4">
               <div className="flex justify-between items-center">
                 <button
-                  onClick={fecharModal}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    fecharModal();
+                  }}
                   className="p-3 bg-black/60 text-white rounded-full backdrop-blur-sm hover:bg-black/80 transition-colors"
                   aria-label="Fechar"
                 >
@@ -338,13 +378,20 @@ export default function GaleriaFotos() {
               </div>
             </div>
 
-            {/* Container principal */}
-            <div className="h-full flex flex-col lg:items-center lg:justify-center lg:p-8">
+            {/* Container principal do modal */}
+            <div 
+              ref={modalRef}
+              className="h-full flex flex-col lg:items-center lg:justify-center lg:p-8" 
+              onClick={(e) => e.stopPropagation()}
+            >
               
               {/* Conteúdo do modal */}
-              <div className="lg:bg-white lg:rounded-2xl lg:overflow-hidden lg:flex lg:flex-row lg:w-full lg:max-w-7xl lg:h-[90vh] lg:shadow-2xl">
+              <div 
+                className="lg:bg-white lg:rounded-2xl lg:overflow-hidden lg:flex lg:flex-row lg:w-full lg:max-w-7xl lg:h-[90vh] lg:shadow-2xl" 
+                onClick={(e) => e.stopPropagation()}
+              >
                 
-                {/* Área da Imagem - ALTURA AJUSTADA para mobile (55vh) */}
+                {/* Área da Imagem */}
                 <div className="h-[55vh] lg:h-full lg:w-7/12 xl:w-2/3 bg-black flex items-center justify-center relative">
                   
                   {/* Imagem principal */}
@@ -359,20 +406,29 @@ export default function GaleriaFotos() {
 
                   {/* Áreas clicáveis para navegação */}
                   <button
-                    onClick={fotoAnterior}
-                    className="absolute left-0 top-0 bottom-0 w-1/3 lg:w-1/4 cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      fotoAnterior();
+                    }}
+                    className="absolute left-0 top-0 bottom-0 w-1/3 lg:w-1/4"
                     aria-label="Foto anterior"
                   />
                   
                   <button
-                    onClick={proximaFoto}
-                    className="absolute right-0 top-0 bottom-0 w-1/3 lg:w-1/4 cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      proximaFoto();
+                    }}
+                    className="absolute right-0 top-0 bottom-0 w-1/3 lg:w-1/4"
                     aria-label="Próxima foto"
                   />
 
-                  {/* Setas Desktop (aparecem no hover) */}
+                  {/* Setas Desktop */}
                   <button
-                    onClick={fotoAnterior}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      fotoAnterior();
+                    }}
                     className="hidden lg:block absolute left-4 top-1/2 transform -translate-y-1/2 p-4 bg-black/50 hover:bg-black/80 text-white rounded-full backdrop-blur-sm transition-all opacity-0 hover:opacity-100"
                     aria-label="Foto anterior"
                   >
@@ -380,14 +436,17 @@ export default function GaleriaFotos() {
                   </button>
                   
                   <button
-                    onClick={proximaFoto}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      proximaFoto();
+                    }}
                     className="hidden lg:block absolute right-4 top-1/2 transform -translate-y-1/2 p-4 bg-black/50 hover:bg-black/80 text-white rounded-full backdrop-blur-sm transition-all opacity-0 hover:opacity-100"
                     aria-label="Próxima foto"
                   >
                     <ChevronRight className="w-8 h-8" />
                   </button>
 
-                  {/* Instruções mobile (aparece brevemente) */}
+                  {/* Instruções mobile */}
                   {mostrarInstrucoes && (
                     <div className="lg:hidden absolute bottom-6 left-0 right-0 text-center animate-fadeIn">
                       <div className="inline-flex items-center space-x-2 bg-black/60 text-white/90 px-4 py-2 rounded-full backdrop-blur-sm">
@@ -398,10 +457,13 @@ export default function GaleriaFotos() {
                     </div>
                   )}
 
-                  {/* Setas Mobile (flutuantes nas laterais) - POSIÇÃO CORRIGIDA */}
+                  {/* Setas Mobile */}
                   <div className="lg:hidden absolute inset-y-0 left-2 flex items-center">
                     <button
-                      onClick={fotoAnterior}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        fotoAnterior();
+                      }}
                       className="p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-sm transition-all"
                       aria-label="Foto anterior"
                     >
@@ -411,7 +473,10 @@ export default function GaleriaFotos() {
                   
                   <div className="lg:hidden absolute inset-y-0 right-2 flex items-center">
                     <button
-                      onClick={proximaFoto}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        proximaFoto();
+                      }}
                       className="p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-sm transition-all"
                       aria-label="Próxima foto"
                     >
@@ -420,8 +485,11 @@ export default function GaleriaFotos() {
                   </div>
                 </div>
 
-                {/* Informações Mobile - SEM OVERFLOW, conteúdo visível */}
-                <div className="lg:hidden bg-white rounded-t-3xl mt-4 flex-1 overflow-visible">
+                {/* Informações Mobile */}
+                <div 
+                  className="lg:hidden bg-white rounded-t-3xl mt-4 flex-1 overflow-visible" 
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <div className="p-6 max-h-[45vh] overflow-y-auto">
                     <div className="space-y-4">
                       <div>
@@ -454,10 +522,7 @@ export default function GaleriaFotos() {
                         </div>
                         
                         <div className="flex items-start">
-                          <Users className="w-5 h-5 text-purple-600 mt-0.5 mr-3 flex-shrink-0" />
                           <div>
-                            <p className="font-semibold text-gray-800 text-sm">Participantes</p>
-                            <p className="text-slate-600">{fotoSelecionada.participantes.toLocaleString()} pessoas</p>
                           </div>
                         </div>
                       </div>
@@ -465,8 +530,11 @@ export default function GaleriaFotos() {
                   </div>
                 </div>
 
-                {/* Informações Desktop (lateral) */}
-                <div className="hidden lg:flex lg:w-5/12 xl:w-1/3 flex-col">
+                {/* Informações Desktop */}
+                <div 
+                  className="hidden lg:flex lg:w-5/12 xl:w-1/3 flex-col" 
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <div className="p-6 lg:p-8 flex-1 overflow-y-auto">
                     <div className="space-y-6">
                       <div>
@@ -499,10 +567,7 @@ export default function GaleriaFotos() {
                         </div>
                         
                         <div className="flex items-start">
-                          <Users className="w-5 h-5 text-purple-600 mt-0.5 mr-3 flex-shrink-0" />
                           <div>
-                            <p className="font-semibold text-gray-800">Participantes</p>
-                            <p className="text-slate-600">{fotoSelecionada.participantes.toLocaleString()} pessoas</p>
                           </div>
                         </div>
                       </div>
@@ -521,7 +586,10 @@ export default function GaleriaFotos() {
                         </p>
                       </div>
                       <button
-                        onClick={fecharModal}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          fecharModal();
+                        }}
                         className="p-2 hover:bg-slate-100 rounded-full transition-colors"
                         aria-label="Fechar"
                       >
@@ -583,6 +651,16 @@ export default function GaleriaFotos() {
 
         .overflow-y-auto::-webkit-scrollbar-thumb:hover {
           background: #94a3b8;
+        }
+
+        /* Prevenir comportamentos indesejados no mobile */
+        @media (max-width: 1024px) {
+          body.modal-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+          }
         }
       `}</style>
     </section>
