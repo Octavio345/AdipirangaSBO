@@ -5,7 +5,7 @@ export default function Footer() {
         © {new Date().getFullYear()} Assembleia de Deus – Ipiranga
       </p>
       <br />
-      Desenvolvido por Octávio Augusto
+      Desenvolvido por Octávio Augusto (19) 971159598
     </footer>
   );
 }

@@ -10,7 +10,7 @@ import Footer from "./components/Footer";
 import VisiteNos from "./components/VisiteNos";
 import FinalMessage from "./components/FinalMessage";
 import SobreNos from "./components/SobreNos";
-
+import GaleriaFotos from './components/GaleriaFotos';
 
 // Componente do Site Principal
 function MainSite() {
@@ -31,6 +31,18 @@ function MainSite() {
   );
 }
 
+// Componente para página da Galeria com layout completo
+function GaleriaPage() {
+  return (
+    <div className="bg-slate-50 text-slate-800 min-h-screen">
+      <Header />
+      <GaleriaFotos />
+      <WhatsApp />
+      <Footer />
+    </div>
+  );
+}
+
 // Componente principal com rotas
 export default function App() {
   return (
@@ -38,7 +50,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<MainSite />} />
         <Route path="/sobre" element={<SobreNos />} />
-        {/* Adicione outras rotas se necessário */}
+        <Route path="/galeria" element={<GaleriaPage />} />
+        <Route path="/eventos" element={<GaleriaPage />} /> {/* Rota alternativa */}
         <Route path="*" element={<MainSite />} /> {/* Fallback */}
       </Routes>
     </Router>

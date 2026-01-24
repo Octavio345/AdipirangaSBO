@@ -76,6 +76,7 @@ export default function Header() {
     { label: "Departamentos", href: "departamentos", type: "anchor" },
     { label: "Liderança", href: "lideranca", type: "anchor" },
     { label: "SEMADI", href: "semadi", type: "anchor" },
+    { label: "Galeria", href: "/galeria", type: "page" }, // ADICIONADO AQUI
   ];
 
   return (
@@ -87,46 +88,45 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
-          {/* Logo e Nome da Igreja - Versão Premium */}
-{/* Logo e Nome da Igreja - Tamanho 64px (Recomendado) */}
-<button 
-  onClick={() => {
-    if (isHomePage) {
-      scrollToSection('inicio');
-    } else {
-      navigate('/');
-    }
-  }}
-  className="flex items-center space-x-3 group cursor-pointer"
->
-  <div className="relative">
-    {/* Efeitos visuais */}
-    <div className="absolute -inset-1.5 rounded-full bg-gradient-to-br from-yellow-400/20 via-transparent to-blue-400/20 blur-sm"></div>
-    
-    {/* Container da Logo - 64px */}
-    <div className="relative w-16 h-16 bg-gradient-to-br from-blue-900 to-blue-800 rounded-full flex items-center justify-center border-2 border-white/30 group-hover:border-yellow-400 transition-all duration-300 shadow-xl overflow-hidden">
-      {/* Sua Logo */}
-      <img
-        src="/imagens/logo.png"
-        alt="Logo AD Ipiranga"
-        className="w-12 h-12 object-contain group-hover:scale-110 transition-transform duration-300"
-      />
-    </div>
-    
-    {/* Ponto amarelo característico */}
-    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-yellow-400 rounded-full border-2 border-blue-900"></div>
-  </div>
-  
-  {/* Texto */}
-  <div className="flex flex-col items-start">
-    <h1 className="font-bold text-xl tracking-wide group-hover:text-yellow-300 transition-colors duration-300">
-      AD Ipiranga
-    </h1>
-    <p className="text-xs text-blue-200 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
-      Igreja Evangélica Assembleia de Deus
-    </p>
-  </div>
-</button>
+          {/* Logo e Nome da Igreja - Tamanho 64px */}
+          <button 
+            onClick={() => {
+              if (isHomePage) {
+                scrollToSection('inicio');
+              } else {
+                navigate('/');
+              }
+            }}
+            className="flex items-center space-x-3 group cursor-pointer"
+          >
+            <div className="relative">
+              {/* Efeitos visuais */}
+              <div className="absolute -inset-1.5 rounded-full bg-gradient-to-br from-yellow-400/20 via-transparent to-blue-400/20 blur-sm"></div>
+              
+              {/* Container da Logo - 64px */}
+              <div className="relative w-16 h-16 bg-gradient-to-br from-blue-900 to-blue-800 rounded-full flex items-center justify-center border-2 border-white/30 group-hover:border-yellow-400 transition-all duration-300 shadow-xl overflow-hidden">
+                {/* Sua Logo */}
+                <img
+                  src="/imagens/logo.png"
+                  alt="Logo AD Ipiranga"
+                  className="w-12 h-12 object-contain group-hover:scale-110 transition-transform duration-300"
+                />
+              </div>
+              
+              {/* Ponto amarelo característico */}
+              <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-yellow-400 rounded-full border-2 border-blue-900"></div>
+            </div>
+            
+            {/* Texto */}
+            <div className="flex flex-col items-start">
+              <h1 className="font-bold text-xl tracking-wide group-hover:text-yellow-300 transition-colors duration-300">
+                AD Ipiranga
+              </h1>
+              <p className="text-xs text-blue-200 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                Igreja Evangélica Assembleia de Deus
+              </p>
+            </div>
+          </button>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
