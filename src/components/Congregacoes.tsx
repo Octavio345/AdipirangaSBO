@@ -168,12 +168,11 @@ export default function Congregacoes() {
       programacao: {
         cultosPrincipais: [
           { dia: "Domingo", horario: "19:00h" },
-          { dia: "Quarta-feira", horario: "20:00h" }
+          { dia: "Quarta", horario: "19:30h" },
+          { dia: "Sexta", horario: "19:30h" }
         ] as Culto[],
-        especiais: [
-          { tipo: "Grupo de Casais", descricao: "Reuniões quinzenais" }
-        ],
-        observacoes: "Culto infantil aos Domingos às 18:30h"
+        especiais: [],
+        observacoes: "Programação em fase de estruturação - consulte localmente"
       }
     },
     {
@@ -219,7 +218,7 @@ export default function Congregacoes() {
       bairro: "Jardim das Flores",
       cidade: "Piracicaba",
       estado: "SP",
-      pastor: "Pr. Carlos Mendes",
+      pastor: "Ev. Cleber",
       programacao: {
         cultosPrincipais: [
           { dia: "Quarta-feira", horario: "19:30h", descricao: "Culto de Oração e Ensino" },
@@ -235,12 +234,12 @@ export default function Congregacoes() {
     },
     {
       id: 10,
-      nome: "Congregação Iporanga - Águas de São Pedro",
+      nome: "Congregação Águas de São Pedro",
       endereco: "Avenida Antônio Joaquim Moura Andrade, 844",
       bairro: "Iporanga",
       cidade: "Águas de São Pedro",
       estado: "SP",
-      pastor: "Pr. Eduardo Lima",
+      pastor: "Pr. Damião",
       programacao: {
         cultosPrincipais: [
           { dia: "Domingo", horario: "18:30h" },
@@ -260,20 +259,15 @@ export default function Congregacoes() {
       pastor: "Pr. Benedito",
       programacao: {
         cultosPrincipais: [
-          { dia: "Domingo", horario: "18:30h", descricao: "Culto Dominical" },
-          { dia: "Quarta-feira", horario: "19:30h", descricao: "Culto de Oração" }
+          { dia: "Sexta", horario: "19:30h", descricao: "Culto de Ensino" },
+          { dia: "Domingo", horario: "19:00h", descricao: "Culto da Familia" }
         ] as Culto[],
         especiais: [
-          { tipo: "1º Domingo", descricao: "Culto da Família" },
-          { tipo: "2º Domingo", descricao: "Culto de Missões" },
-          { tipo: "3º Domingo", descricao: "Santa Ceia" },
-          { tipo: "4º Domingo", descricao: "Culto com os Jovens" }
         ],
         outros: [
-          "Terça-feira - 20:00h: Estudo Bíblico",
-          "Sexta-feira - 19:30h: Culto de Louvor"
+          "Fique Atentao para atualizações"
         ],
-        observacoes: "Culto infantil aos Domingos às 9:00h"
+        observacoes: "Programação em fase de estruturação - consulte localmente"
       }
     }
   ];
