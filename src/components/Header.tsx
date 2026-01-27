@@ -1,4 +1,4 @@
-import { Menu, X, ChevronRight } from 'lucide-react';
+import { Menu, X, ChevronRight, Calendar } from 'lucide-react'; // Adicionei o Calendar
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
@@ -88,11 +88,27 @@ export default function Header() {
     scrollToSection('semadi');
   }, [scrollToSection]);
 
+  const handleAgenda = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    // Se estamos na home page, rola para a seção da agenda
+    if (isHomePage) {
+      scrollToSection('agenda');
+    } else {
+      // Se não estamos na home, navega para a página da agenda
+      navigate('/agenda');
+      setIsMenuOpen(false);
+    }
+  }, [isHomePage, navigate, scrollToSection]);
+
   const menuItems = [
     { label: "Início", href: "inicio", type: "anchor" },
     { label: "Sobre Nós", href: "/sobre", type: "page" },
+    { label: "Congregações", href: "/congregacoes", type: "page" },
     { label: "Departamentos", href: "departamentos", type: "anchor" },
     { label: "Liderança", href: "lideranca", type: "anchor" },
+    { label: "Agenda", href: "agenda", type: "anchor", onClick: handleAgenda },
     { label: "SEMADI", href: "semadi", type: "anchor", onClick: handleSemadi },
     { label: "Galeria", href: "/galeria", type: "page" },
   ];
@@ -160,62 +176,79 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
-            {menuItems.map((link) => (
-              link.type === 'page' ? (
+            {menuItems.map((link) => {
+              // Item da Agenda com ícone especial
+              if (link.label === "Agenda") {
+                return (
+                  <button
+                    key={link.label}
+                    onClick={link.onClick}
+                    className="relative px-3 py-2 rounded-lg transition-all duration-300 group whitespace-nowrap"
+                  >
+                    <span className="relative z-10 flex items-center gap-1">
+                      <Calendar className="w-3.5 h-3.5 text-yellow-300" />
+                      <span className="text-sm font-medium text-yellow-300">{link.label}</span>
+                      <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transform -translate-x-1 group-hover:translate-x-0 transition-all duration-300" />
+                    </span>
+                    <div className="absolute inset-0 bg-white/0 group-hover:bg-yellow-400/10 rounded-lg transition-all duration-300"></div>
+                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-yellow-400 group-hover:w-3/4 transition-all duration-300"></div>
+                  </button>
+                );
+              }
+              
+              return link.type === 'page' ? (
                 <Link
                   key={link.label}
                   to={link.href}
-                  className="relative px-4 py-2 rounded-lg transition-all duration-300 group"
+                  className="relative px-3 py-2 rounded-lg transition-all duration-300 group whitespace-nowrap"
                   onClick={(e) => {
                     e.stopPropagation();
                     setIsMenuOpen(false);
                   }}
                 >
                   <span className="relative z-10 flex items-center gap-1">
-                    {link.label}
-                    <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+                    <span className="text-sm font-medium">{link.label}</span>
+                    <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transform -translate-x-1 group-hover:translate-x-0 transition-all duration-300" />
                   </span>
                   <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 rounded-lg transition-all duration-300"></div>
                   <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-yellow-400 group-hover:w-3/4 transition-all duration-300"></div>
                 </Link>
               ) : link.onClick ? (
-                // Item SEMADI com handler específico
                 <button
                   key={link.label}
                   onClick={link.onClick}
-                  className="relative px-4 py-2 rounded-lg transition-all duration-300 group"
+                  className="relative px-3 py-2 rounded-lg transition-all duration-300 group whitespace-nowrap"
                 >
                   <span className="relative z-10 flex items-center gap-1">
-                    {link.label}
-                    <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+                    <span className="text-sm font-medium">{link.label}</span>
+                    <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transform -translate-x-1 group-hover:translate-x-0 transition-all duration-300" />
                   </span>
                   <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 rounded-lg transition-all duration-300"></div>
                   <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-yellow-400 group-hover:w-3/4 transition-all duration-300"></div>
                 </button>
               ) : (
-                // Outros itens de anchor
                 <button
                   key={link.label}
                   onClick={(e) => handleAnchorClick(e, link.href)}
-                  className="relative px-4 py-2 rounded-lg transition-all duration-300 group"
+                  className="relative px-3 py-2 rounded-lg transition-all duration-300 group whitespace-nowrap"
                 >
                   <span className="relative z-10 flex items-center gap-1">
-                    {link.label}
-                    <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+                    <span className="text-sm font-medium">{link.label}</span>
+                    <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transform -translate-x-1 group-hover:translate-x-0 transition-all duration-300" />
                   </span>
                   <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 rounded-lg transition-all duration-300"></div>
                   <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-yellow-400 group-hover:w-3/4 transition-all duration-300"></div>
                 </button>
-              )
-            ))}
+              );
+            })}
             
             {/* Botão Visite-nos */}
             <button
               onClick={handleVisiteNos}
-              className="ml-2 px-5 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-blue-900 font-semibold rounded-lg hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2 group"
+              className="ml-2 px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-blue-900 font-semibold rounded-lg hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2 group whitespace-nowrap text-sm"
             >
               Visite-nos
-              <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
+              <ChevronRight className="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform duration-300" />
             </button>
           </nav>
 
@@ -244,13 +277,35 @@ export default function Header() {
         {/* Mobile Menu */}
         <div className={`md:hidden transition-all duration-500 ease-in-out overflow-hidden ${
           isMenuOpen 
-            ? 'max-h-[500px] opacity-100'
+            ? 'max-h-[600px] opacity-100'
             : 'max-h-0 opacity-0'
         }`}>
           <nav className="bg-gradient-to-b from-blue-800/95 to-blue-900/95 backdrop-blur-sm border-t border-white/10 shadow-xl rounded-b-lg">
             <div className="px-3 pt-3 pb-4 space-y-1.5">
-              {menuItems.map((link) => (
-                link.type === 'page' ? (
+              {menuItems.map((link) => {
+                // Item da Agenda mobile com ícone
+                if (link.label === "Agenda") {
+                  return (
+                    <button
+                      key={link.label}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setIsMenuOpen(false);
+                        link.onClick?.(e as any);
+                      }}
+                      className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-yellow-400/10 transition-all duration-300 border-l-2 border-yellow-400 hover:pl-5 flex items-center justify-between group text-sm"
+                    >
+                      <span className="flex items-center gap-2 truncate">
+                        <Calendar className="w-3.5 h-3.5 text-yellow-300 flex-shrink-0" />
+                        <span className="text-yellow-300 font-medium">{link.label}</span>
+                      </span>
+                      <ChevronRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300 flex-shrink-0 text-yellow-300" />
+                    </button>
+                  );
+                }
+                
+                return link.type === 'page' ? (
                   <Link
                     key={link.label}
                     to={link.href}
@@ -266,7 +321,6 @@ export default function Header() {
                     <ChevronRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300 flex-shrink-0" />
                   </Link>
                 ) : link.onClick ? (
-                  // Item SEMADI
                   <button
                     key={link.label}
                     onClick={(e) => {
@@ -281,7 +335,6 @@ export default function Header() {
                     <ChevronRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300 flex-shrink-0" />
                   </button>
                 ) : (
-                  // Outros itens de anchor
                   <button
                     key={link.label}
                     onClick={(e) => {
@@ -295,10 +348,10 @@ export default function Header() {
                     <span className="truncate">{link.label}</span>
                     <ChevronRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300 flex-shrink-0" />
                   </button>
-                )
-              ))}
+                );
+              })}
               
-              {/* Botão Visite-nos */}
+              {/* Botão Visite-nos mobile */}
               <button
                 onClick={(e) => {
                   e.preventDefault();

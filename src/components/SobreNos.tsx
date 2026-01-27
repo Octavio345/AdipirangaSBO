@@ -1,6 +1,7 @@
 import { Calendar, MapPin, Users, Church, Clock, Star, ChevronLeft, ChevronUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import Header from './Header';
 
 export default function SobreNos() {
   const [activeTimeline, setActiveTimeline] = useState('sao-paulo');
@@ -106,6 +107,7 @@ export default function SobreNos() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+     <Header />
       {/* Botão Voltar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <Link
