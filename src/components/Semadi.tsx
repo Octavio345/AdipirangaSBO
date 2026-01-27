@@ -1,4 +1,4 @@
-import { Globe, Users, Target, MapPin, ExternalLink, BookOpen, Trophy, Shield, Mail, Play, Pause } from 'lucide-react';
+import { Globe, Users, Target, MapPin, ExternalLink, BookOpen, Trophy, Shield, Play, Pause } from 'lucide-react';
 import { useRef, useState, useEffect } from 'react';
 
 export default function Semadi() {
