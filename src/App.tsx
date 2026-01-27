@@ -13,7 +13,8 @@ import SobreNos from "./components/SobreNos";
 import GaleriaFotos from './components/GaleriaFotos';
 import Congregacoes from './components/Congregacoes';
 import AgendaSetorial from './components/AgendaSetorial';
-import AgendaCard from './components/AgendaCard'; // Importe o card
+import AgendaCard from './components/AgendaCard';
+import ScrollToTop from './components/ScrollToTop';
 
 // Componente do Site Principal
 function MainSite() {
@@ -24,7 +25,7 @@ function MainSite() {
       <main className="space-y-24">
         <Departamentos />
         <Lideranca /> 
-        <AgendaCard /> {/* Adicione o card da agenda */}
+        <AgendaCard />
         <VisiteNos />
         <Semadi />  
         <FinalMessage />
@@ -71,13 +72,26 @@ function CongregacoesPage() {
   );
 }
 
+// Componente para página Sobre Nós com layout completo
+function SobreNosPage() {
+  return (
+    <div className="bg-slate-50 text-slate-800 min-h-screen">
+      <Header />
+      <SobreNos />
+      <WhatsApp />
+      <Footer />
+    </div>
+  );
+}
+
 // Componente principal com rotas
 export default function App() {
   return (
     <Router>
+      <ScrollToTop /> {/* Adicione aqui, dentro do Router mas fora das Routes */}
       <Routes>
         <Route path="/" element={<MainSite />} />
-        <Route path="/sobre" element={<SobreNos />} />
+        <Route path="/sobre" element={<SobreNosPage />} />
         <Route path="/agenda" element={<AgendaPage />} />
         <Route path="/galeria" element={<GaleriaPage />} />
         <Route path="/eventos" element={<GaleriaPage />} />

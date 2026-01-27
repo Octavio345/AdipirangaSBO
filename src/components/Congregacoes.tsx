@@ -133,7 +133,7 @@ export default function Congregacoes() {
     },
     {
       id: 5,
-      nome: "Congregação Regina Basteli - Limeira",
+      nome: "Congregação Regina Bastelli - Limeira",
       endereco: "Rua Oscar Bertoline, 115",
       bairro: "Jardim Regina Bastelli",
       cidade: "Limeira",

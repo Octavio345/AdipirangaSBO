@@ -3,7 +3,7 @@ import { MapPin, Clock, Accessibility, Users, Calendar, Music, Instagram, Facebo
 export default function VisiteNos() {
   // Endereço da igreja local
   const enderecoLocal = {
-    rua: "Rua Terezina, 137",
+    rua: "Rua Teresina, 137",
     bairro: "Cidade Nova",
     cidade: "Santa Bárbara D'Oeste - SP",
     cep: "13457-000"
@@ -71,8 +71,7 @@ export default function VisiteNos() {
   ];
 
   // URLs do Google Maps
-  const googleMapsLocal = `https://www.google.com/maps?q=${encodeURIComponent('Rua Terezina, 137, Cidade Nova, Santa Bárbara D\'Oeste, SP')}&output=embed`;
-  // Corrigido: Variável usada agora (sem erro TypeScript)
+  const googleMapsLocal = `https://www.google.com/maps?q=${encodeURIComponent('Rua Teresina, 137, Cidade Nova, Santa Bárbara D\'Oeste, SP')}&output=embed`;
   const googleMapsMatriz = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Av. Dr. Ricardo Jafet, 214, Ipiranga, São Paulo, SP')}`;
 
   return (
@@ -92,7 +91,7 @@ export default function VisiteNos() {
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           
-          {/* Coluna da Esquerda - Mapa e Endereços */}
+          {/* Coluna da Esquerda - Mapa e Endereços (Desktop) */}
           <div className="space-y-8">
             
             {/* Mapa da Igreja Local */}
@@ -113,7 +112,7 @@ export default function VisiteNos() {
               
               {/* Botão para abrir no Google Maps */}
               <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Rua Terezina, 137, Cidade Nova, Santa Bárbara D\'Oeste, SP')}`}
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Rua Teresina, 137, Cidade Nova, Santa Bárbara D\'Oeste, SP')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold text-center hover:from-blue-700 hover:to-blue-800 transition-all duration-300 flex items-center justify-center gap-2"
@@ -148,7 +147,7 @@ export default function VisiteNos() {
                   <ul className="space-y-2 text-sm text-slate-600">
                     <li className="flex items-start gap-2">
                       <span className="w-2 h-2 bg-blue-500 rounded-full mt-2"></span>
-                      <span>Vindo do Centro: Pegue a Av. Santa Bárbara até a Rua Terezina</span>
+                      <span>Vindo do Centro: Pegue a Av. Santa Bárbara até a Rua Teresina</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="w-2 h-2 bg-blue-500 rounded-full mt-2"></span>
@@ -159,44 +158,43 @@ export default function VisiteNos() {
               </div>
             </div>
 
-            {/* Sede Matriz em São Paulo */}
-            <div className="bg-gradient-to-r from-blue-900 to-blue-800 rounded-2xl p-6 shadow-lg text-white">
+            {/* Sede Matriz - Visível no Desktop, oculta no Mobile (aparecerá no final) */}
+            <div className="hidden lg:block bg-gradient-to-r from-blue-900 to-blue-800 rounded-2xl p-6 shadow-lg text-white">
               <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                 <Home className="w-6 h-6 text-yellow-300" />
                 Sede Matriz - São Paulo
               </h3>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-yellow-300 mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold text-lg">{sedeMatriz.rua}</p>
-                    <p className="text-blue-200">{sedeMatriz.bairro}</p>
-                    <p className="text-blue-200">{sedeMatriz.cidade}</p>
-                    <p className="text-blue-300 text-sm mt-2">
-                      CEP: {sedeMatriz.cep}
-                    </p>
-                  </div>
+
+              <div className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-yellow-300 mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold text-lg">{sedeMatriz.rua}</p>
+                  <p className="text-blue-200">{sedeMatriz.bairro}</p>
+                  <p className="text-blue-200">{sedeMatriz.cidade}</p>
+                  <p className="text-blue-300 text-sm mt-2">
+                    CEP: {sedeMatriz.cep}
+                  </p>
                 </div>
-                
-                {/* AGORA USANDO A VARIÁVEL googleMapsMatriz - SEM ERRO! */}
-                <a
-                  href={googleMapsMatriz}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-white text-blue-900 font-semibold rounded-lg hover:bg-blue-100 transition-all duration-300"
-                >
-                  <MapPin className="w-4 h-4" />
-                  Ver localização da matriz
-                </a>
               </div>
+
+              <a
+                href={googleMapsMatriz}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-white text-blue-900 font-semibold rounded-lg hover:bg-blue-100 transition-all duration-300"
+              >
+                <MapPin className="w-4 h-4" />
+                Ver localização da matriz
+              </a>
             </div>
+
           </div>
 
           {/* Coluna da Direita - Informações */}
           <div className="space-y-8">
             
-            {/* Redes Sociais */}
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 shadow-lg border border-indigo-100">
+            {/* Redes Sociais - Versão Desktop (em posição normal) */}
+            <div className="hidden lg:block bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 shadow-lg border border-indigo-100">
               <h3 className="text-xl font-bold text-blue-900 mb-4">
                 Siga-nos nas Redes Sociais
               </h3>
@@ -298,6 +296,74 @@ export default function VisiteNos() {
                   </div>
                 ))}
               </div>
+            </div>
+
+            {/* Redes Sociais - Versão Mobile (ANTES da Sede Matriz) */}
+            <div className="lg:hidden bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 shadow-lg border border-indigo-100">
+              <h3 className="text-xl font-bold text-blue-900 mb-4">
+                Siga-nos nas Redes Sociais
+              </h3>
+              <div className="grid grid-cols-1 gap-4">
+                {redesSociais.map((rede, index) => (
+                  <a
+                    key={index}
+                    href={rede.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-4 bg-white rounded-xl border border-indigo-100 hover:border-indigo-300 hover:shadow-md transition-all duration-300 group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                        rede.nome === 'Instagram' 
+                          ? 'bg-gradient-to-r from-pink-500 to-orange-400' 
+                          : 'bg-blue-600'
+                      }`}>
+                        {rede.icon}
+                      </div>
+                      <div>
+                        <span className="font-semibold text-slate-800">{rede.nome}</span>
+                        <p className="text-slate-600 text-sm">{rede.usuario}</p>
+                      </div>
+                    </div>
+                    <span className="text-blue-600 font-medium group-hover:text-blue-800 transition-colors">
+                      Seguir →
+                    </span>
+                  </a>
+                ))}
+              </div>
+              <p className="text-slate-600 text-sm mt-4 text-center">
+                Fique por dentro das novidades, eventos e mensagens inspiradoras
+              </p>
+            </div>
+
+            {/* Sede Matriz - Visível apenas no Mobile, aparece DEPOIS das Redes Sociais */}
+            <div className="lg:hidden bg-gradient-to-r from-blue-900 to-blue-800 rounded-2xl p-6 shadow-lg text-white">
+              <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                <Home className="w-6 h-6 text-yellow-300" />
+                Sede Matriz - São Paulo
+              </h3>
+
+              <div className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-yellow-300 mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold text-lg">{sedeMatriz.rua}</p>
+                  <p className="text-blue-200">{sedeMatriz.bairro}</p>
+                  <p className="text-blue-200">{sedeMatriz.cidade}</p>
+                  <p className="text-blue-300 text-sm mt-2">
+                    CEP: {sedeMatriz.cep}
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href={googleMapsMatriz}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-white text-blue-900 font-semibold rounded-lg hover:bg-blue-100 transition-all duration-300"
+              >
+                <MapPin className="w-4 h-4" />
+                Ver localização da matriz
+              </a>
             </div>
 
           </div>

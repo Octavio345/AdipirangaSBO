@@ -2,6 +2,7 @@ import { Calendar, MapPin, Users, Church, Clock, Star, ChevronLeft, ChevronUp } 
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Header from './Header';
+import Footer from './Footer';
 
 export default function SobreNos() {
   const [activeTimeline, setActiveTimeline] = useState('sao-paulo');
@@ -436,6 +437,8 @@ export default function SobreNos() {
           </div>
         </div>
       </footer>
+
+      <Footer />
     </div>
   );
 }
