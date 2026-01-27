@@ -1,4 +1,5 @@
-import { MapPin, Church, Calendar, Clock, Users, ChevronLeft, Heart, BookOpen, Music, Star, Phone, Mail, Navigation } from 'lucide-react';
+// src/components/Congregacoes.tsx
+import { MapPin, Church, Calendar, Clock, Users, Heart, BookOpen, Music, Star, Navigation } from 'lucide-react'; // Removi ChevronLeft, Phone, Mail
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Header from './Header';
@@ -14,12 +15,12 @@ export default function Congregacoes() {
     window.open(`https://www.google.com/maps/search/?api=1&query=${enderecoFormatado}`, '_blank');
   };
 
-  // Função para fazer ligação
-  const fazerLigacao = (telefone: string) => {
-    // Remove caracteres não numéricos
-    const numeroLimpo = telefone.replace(/\D/g, '');
-    window.open(`tel:${numeroLimpo}`, '_self');
-  };
+  // Interface para o tipo de culto
+  interface Culto {
+    dia: string;
+    horario: string;
+    descricao?: string;
+  }
 
   const congregacoes = [
     {
@@ -34,7 +35,7 @@ export default function Congregacoes() {
         cultosPrincipais: [
           { dia: "Terça-feira", horario: "19:30h", descricao: "Culto de Ensino" },
           { dia: "Domingo", horario: "18:30h" }
-        ],
+        ] as Culto[],
         especiais: [
           { tipo: "1º Domingo", descricao: "Culto Público" },
           { tipo: "2º Domingo", descricao: "Culto de Missões" },
@@ -59,7 +60,7 @@ export default function Congregacoes() {
           { dia: "Sábado", horario: "18:30h" },
           { dia: "Domingo", horario: "18:30h" },
           { dia: "Quarta-feira", horario: "19:30h", descricao: "Culto Público" }
-        ],
+        ] as Culto[],
         especiais: [
           { tipo: "1º Domingo", descricao: "Culto de Missões" },
           { tipo: "2º Domingo", descricao: "Santa Ceia" },
@@ -86,7 +87,7 @@ export default function Congregacoes() {
         cultosPrincipais: [
           { dia: "Domingo", horario: "18:30h" },
           { dia: "Quarta-feira", horario: "19:30h", descricao: "Culto de Oração e Ensino" }
-        ],
+        ] as Culto[],
         especiais: [
           { tipo: "1º Domingo", descricao: "Culto com a Família" },
           { tipo: "2º Domingo", descricao: "Culto de Missões" },
@@ -114,7 +115,7 @@ export default function Congregacoes() {
         cultosPrincipais: [
           { dia: "Domingo", horario: "18:00h" },
           { dia: "Quinta-feira", horario: "20:00h", descricao: "Culto de Ensino" }
-        ],
+        ] as Culto[],
         especiais: [
           { tipo: "1º Domingo", descricao: "Culto com a Família" },
           { tipo: "2º Domingo", descricao: "Culto de Missões" },
@@ -141,7 +142,7 @@ export default function Congregacoes() {
       programacao: {
         cultosPrincipais: [
           { dia: "Quarta-feira", horario: "20:00h", descricao: "Culto de Ensino" }
-        ],
+        ] as Culto[],
         especiais: [
           { tipo: "1º Domingo", descricao: "Culto com os Jovens" },
           { tipo: "2º Domingo", descricao: "Culto de Missões" },
@@ -168,7 +169,7 @@ export default function Congregacoes() {
         cultosPrincipais: [
           { dia: "Domingo", horario: "19:00h" },
           { dia: "Quarta-feira", horario: "20:00h" }
-        ],
+        ] as Culto[],
         especiais: [
           { tipo: "Grupo de Casais", descricao: "Reuniões quinzenais" }
         ],
@@ -187,7 +188,7 @@ export default function Congregacoes() {
         cultosPrincipais: [
           { dia: "Domingo", horario: "18:00h", descricao: "Culto da Família ou Missões" },
           { dia: "Quarta-feira", horario: "19:30h", descricao: "Culto de Ensino" }
-        ],
+        ] as Culto[],
         outros: [
           "Sexta-feira - 19:30h: Culto",
           "Encontro de jovens: Sábados às 19:00h"
@@ -206,7 +207,7 @@ export default function Congregacoes() {
         cultosPrincipais: [
           { dia: "Domingo", horario: "18:30h" },
           { dia: "Terça-feira", horario: "19:30h", descricao: "Culto de Ensino" }
-        ],
+        ] as Culto[],
         especiais: [],
         observacoes: "Em fase de organização da programação completa"
       }
@@ -223,7 +224,7 @@ export default function Congregacoes() {
         cultosPrincipais: [
           { dia: "Quarta-feira", horario: "19:30h", descricao: "Culto de Oração e Ensino" },
           { dia: "Domingo", horario: "18:30h" }
-        ],
+        ] as Culto[],
         especiais: [
           { tipo: "1º Domingo", descricao: "Santa Ceia" },
           { tipo: "2º Domingo", descricao: "Missões" },
@@ -243,8 +244,8 @@ export default function Congregacoes() {
       programacao: {
         cultosPrincipais: [
           { dia: "Domingo", horario: "18:30h" },
-          { dia: "Quarta", horario: "19:30h" },
-        ],
+          { dia: "Quarta", horario: "19:30h" }
+        ] as Culto[],
         especiais: [],
         observacoes: "Programação em fase de estruturação - consulte localmente"
       }
@@ -261,7 +262,7 @@ export default function Congregacoes() {
         cultosPrincipais: [
           { dia: "Domingo", horario: "18:30h", descricao: "Culto Dominical" },
           { dia: "Quarta-feira", horario: "19:30h", descricao: "Culto de Oração" }
-        ],
+        ] as Culto[],
         especiais: [
           { tipo: "1º Domingo", descricao: "Culto da Família" },
           { tipo: "2º Domingo", descricao: "Culto de Missões" },
@@ -291,7 +292,6 @@ export default function Congregacoes() {
       <Header />
       
       <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white pt-20">
-
         {/* Hero Section */}
         <section className="py-12 sm:py-16 md:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -486,8 +486,6 @@ export default function Congregacoes() {
                         Precisa de mais informações?
                       </div>
                       <div className="flex gap-3">
-                        {/* Botão Ligar */}
-                        
                         {/* Botão Como Chegar - ABRE GOOGLE MAPS */}
                         <button
                           onClick={() => abrirGoogleMaps(congregacao.endereco, congregacao.cidade, congregacao.estado)}

@@ -102,13 +102,11 @@ const AgendaSetorial: React.FC = () => {
   }, {} as Record<string, Evento[]>);
 
   return (
-    
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-gray-100 pt-20">
       <div className="max-w-6xl mx-auto px-4 py-12">
         {/* Cabeçalho */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
-            <br />
             Agenda Setorial 2026
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -121,7 +119,7 @@ const AgendaSetorial: React.FC = () => {
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="p-6 md:p-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-              {Object.entries(eventosPorMes).map(([mes, eventosMes], index) => (
+              {Object.entries(eventosPorMes).map(([mes, eventosMes]) => (
                 <div 
                   key={mes} 
                   className="bg-gray-50 rounded-xl p-4 md:p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-300"
@@ -130,9 +128,9 @@ const AgendaSetorial: React.FC = () => {
                     {mes}
                   </h2>
                   <div className="space-y-2 md:space-y-3">
-                    {eventosMes.map((evento, idx) => (
+                    {eventosMes.map((evento) => (
                       <div 
-                        key={idx} 
+                        key={`${mes}-${evento.data}`} 
                         className="flex items-start p-2 md:p-3 bg-white rounded-lg hover:bg-blue-50 transition-colors"
                       >
                         <div className="w-16 md:w-20 flex-shrink-0">
