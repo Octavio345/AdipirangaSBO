@@ -1,11 +1,30 @@
 // src/components/Congregacoes.tsx
-import { MapPin, Church, Calendar, Clock, Users, Heart, BookOpen, Music, Star, Navigation } from 'lucide-react'; // Removi ChevronLeft, Phone, Mail
+import { MapPin, Church, Calendar, Clock, Users, Heart, BookOpen, Music, Star, Navigation, ChevronUp } from 'lucide-react'; // Adicionei ChevronUp
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // Adicionei useEffect
 import Header from './Header';
 
 export default function Congregacoes() {
   const [activeCity, setActiveCity] = useState('todos');
+  const [showScrollTop, setShowScrollTop] = useState(false); // Estado para mostrar botão
+
+  // Efeito para mostrar/ocultar botão de scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Função para rolar para o topo
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   // Função para abrir Google Maps com o endereço
   const abrirGoogleMaps = (endereco: string, cidade: string, estado: string) => {
@@ -566,6 +585,17 @@ export default function Congregacoes() {
             </div>
           </div>
         </footer>
+
+              {/* Botão para voltar ao topo - LADO ESQUERDO */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 left-8 p-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors z-50"
+          aria-label="Voltar ao topo"
+        >
+          <ChevronUp className="w-6 h-6" />
+        </button>
+      )}
       </div>
     </>
   );

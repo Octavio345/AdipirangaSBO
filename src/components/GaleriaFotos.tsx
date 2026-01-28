@@ -10,7 +10,8 @@ import {
   Music,
   Heart,
   Search,
-  Filter
+  Filter,
+  ChevronUp // Adicionei ChevronUp
 } from "lucide-react";
 
 interface Foto {
@@ -93,6 +94,7 @@ export default function GaleriaFotos() {
   const [carregando] = useState(false);
   const [mostrarInstrucoes, setMostrarInstrucoes] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false); // Estado para mostrar botão
   const modalRef = useRef<HTMLDivElement>(null);
 
   // Detectar se é mobile
@@ -106,6 +108,24 @@ export default function GaleriaFotos() {
     
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Controle do botão de voltar ao topo
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Função para rolar para o topo
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   // Categorias disponíveis
   const categorias = [
@@ -603,6 +623,17 @@ export default function GaleriaFotos() {
           </div>
         )}
       </div>
+
+      {/* Botão para voltar ao topo - LADO ESQUERDO */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 left-8 p-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors z-40"
+          aria-label="Voltar ao topo"
+        >
+          <ChevronUp className="w-6 h-6" />
+        </button>
+      )}
 
       {/* CSS para animações */}
       <style>{`

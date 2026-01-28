@@ -1,5 +1,5 @@
 // src/components/AgendaSetorial.tsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface Evento {
   data: string;
@@ -8,6 +8,26 @@ interface Evento {
 }
 
 const AgendaSetorial: React.FC = () => {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // Efeito para mostrar/ocultar botão de scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Função para rolar para o topo
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   const eventos: Evento[] = [
     // Janeiro
     { data: '10', descricao: 'Reunião Ministerial Sede Matriz (Eleição de Diretoria)', mes: 'Janeiro' },
@@ -128,9 +148,9 @@ const AgendaSetorial: React.FC = () => {
                     {mes}
                   </h2>
                   <div className="space-y-2 md:space-y-3">
-                    {eventosMes.map((evento) => (
+                    {eventosMes.map((evento, index) => (
                       <div 
-                        key={`${mes}-${evento.data}`} 
+                        key={`${mes}-${evento.data}-${index}`} 
                         className="flex items-start p-2 md:p-3 bg-white rounded-lg hover:bg-blue-50 transition-colors"
                       >
                         <div className="w-16 md:w-20 flex-shrink-0">
@@ -183,6 +203,30 @@ const AgendaSetorial: React.FC = () => {
             Consulte os comunicados semanais para informações atualizadas.
           </p>
         </div>
+
+        {/* Botão para voltar ao topo - AGORA NO LADO ESQUERDO */}
+        {showScrollTop && (
+          <button
+            onClick={scrollToTop}
+            className="fixed bottom-8 left-8 p-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors z-50"
+            aria-label="Voltar ao topo"
+          >
+            <svg 
+              className="w-6 h-6" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24" 
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M5 10l7-7m0 0l7 7m-7-7v18" 
+              />
+            </svg>
+          </button>
+        )}
       </div>
     </div>
   );
